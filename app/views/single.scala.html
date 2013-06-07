@@ -1,0 +1,76 @@
+@(blog: Blog, commentForm: Form[Comment],id: Long, loginForm:Form[User],curUser: User)
+@import helper._
+
+
+    
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/blog.css")">
+
+@main("Welcome to Play 2.1") {
+	<a href="/blog" class="main-title">
+    		My Blog
+  	</a>
+  	
+  	  		<div class="login-area">
+		@if(curUser==null){
+		
+		
+		      @form(routes.Application.login()) {
+					@inputText(loginForm("username")) 
+					@inputText(loginForm("password")) 
+		        	<input type="submit">
+	    		}
+					|
+		        <a class="login-link" href="">sign-up</a>
+	    	
+**/
+    	}else{
+    	  <a class="login-link" href="@routes.Application.signupPage()">@curUser.username</a>
+	      |
+	      <a class="login-link" href="@routes.Application.logout()">logout</a>
+    	}
+ 		 </div>
+
+ 
+    	<div id="content">
+		    
+	    		<div class="post">
+					  <div class="post-heading">
+					    <div class="post-title">
+					      <a href="/blog/@blog.id" >@blog.title </a> by 
+					      @blog.author.username
+					    </div>
+					
+					    <div class="post-date">
+					      @blog.create_time
+					    </div>
+					 </div>
+	
+					 <div class="post-content">
+					    	@blog.content
+					 </div>
+					 <hr>
+					 <h3>Comments(@blog.comments.size()  )<h3>
+						
+						@for(comment<-blog.comments){
+						<div class="comment">
+							<div class="comment-title"> <b><a href=""> @comment.author.username </a></b> said on @comment.create_time </div>	
+							<div class="comment-body">@comment.body </div> 
+						</div>
+						}
+					 
+					</div>
+	
+			</div>
+    	
+    	 @if(curUser!=null){
+    			@form(routes.Application.postComment(id: Long)) {
+					@inputText(commentForm("body")) 
+		        	<input type="submit">
+	    		}
+	    	}else{
+	    		<h3>Please login to post comment</h3>
+	    	}
+
+    
+	    	
+}
