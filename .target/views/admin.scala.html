@@ -29,11 +29,11 @@
 @main("Welcome to Play 2.1") {
 <h2>Unpublished Blogs</h2>
 		@for(u<- unpublished){
-			<a href="@routes.Application.single(u.id)" >@u.title </a> by  @u.author.username <a href="@controllers.Application.submitEditSingle(u.id)"> edit post </a> <br>
+			<a href="@routes.Application.single(u.id)" >@u.title </a> by  @u.author.username <a href="@routes.Application.editSingle(u.id)"> edit post </a> <br>
     	}
 <h2>Published Blogs</h2>    	
     	@for(p<- published){
-			<a href="@routes.Application.single(p.id)" >@p.title </a> by @p.author.username <a href="@controllers.Application.submitEditSingle(p.id)"> edit post </a> <br>
+			<a href="@routes.Application.single(p.id)" >@p.title </a> by @p.author.username <a href="@routes.Application.editSingle(p.id)"> edit post </a> <br>
     	}
     	
     }
