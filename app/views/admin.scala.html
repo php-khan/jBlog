@@ -1,4 +1,4 @@
-@(blogs: List[Blog], blogForm: Form[Blog], loginForm:Form[User],curUser: User)
+@(blogs: List[Blog], blogForm: Form[Blog], loginForm:Form[User],curUser: User, published: List[Blog], unpublished: List[Blog])
 @import helper._
 
 
@@ -27,35 +27,14 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/blog.css")">
 
 @main("Welcome to Play 2.1") {
-	<a href="/blog" class="main-title">
-    		My Blog
-  	</a>
-
-    @for(blog <- blogs){
-    	<div id="content">
-		    
-	    		<div class="post">
-					  <div class="post-heading">
-					    <div class="post-title">
-					      <a href="@routes.Application.single(blog.id)" >@blog.title </a> by 
-					      @blog.author.username
-					    </div>
-					
-					    <div class="post-date">
-					      @blog.create_time
-					    </div>
-					 </div>
-	
-					 <div class="post-content">
-					    	@Html(blog.content)
-					 </div>
-					 <hr>
-					 <h3> <a href="@routes.Application.single(blog.id)">Comments(@blog.comments.size()) </a></h3>
-				
-					 
-					</div>
-	
-			</div>
+<h2>Unpublished Blogs</h2>
+		@for(u<- unpublished){
+			<a href="@routes.Application.single(u.id)" >@u.title </a> by  @u.author.username <a href="@controllers.Application.submitEditSingle(u.id)"> edit post </a> <br>
+    	}
+<h2>Published Blogs</h2>    	
+    	@for(p<- published){
+			<a href="@routes.Application.single(p.id)" >@p.title </a> by @p.author.username <a href="@controllers.Application.submitEditSingle(p.id)"> edit post </a> <br>
+    	}
     	
     }
     	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.js")">
@@ -96,4 +75,4 @@ jQuery(function() {
 	   }
 	   	   
 	    	
-}
+

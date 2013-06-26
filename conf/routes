@@ -11,7 +11,8 @@ GET      /logout                         controllers.Application.logout()
 GET     /                               controllers.Application.index()
 
 GET     /admin                          controllers.Application.admin()
-
+GET     /admin/blog/:id                 controllers.Application.editSingle(id : Long)
+POST     /admin/blog/:id                 controllers.Application.submitEditSingle(id : Long)
 GET     /blog/:id                       controllers.Application.single(id : Long)
 POST     /post                          controllers.Application.post()
 POST     /blog/:id                      controllers.Application.postComment(id : Long)

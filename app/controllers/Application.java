@@ -46,7 +46,7 @@ public class Application extends Controller {
     }
     
     public static Result admin() {
-        return ok(views.html.index.render(Blog.unpublished(),blogForm,loginForm,curUser()));
+        return ok(views.html.admin.render(Blog.unpublished(),blogForm,loginForm,curUser(),Blog.published(), Blog.unpublished()));
     }
     
     /*
@@ -90,6 +90,25 @@ public class Application extends Controller {
   
 }
     static Form<User> signupForm = Form.form(User.class);
+    
+    public static Result editSingle(Long id){
+    	blogForm =blogForm.fill(Blog.find.byId(id));
+    	return ok(views.html.singleedit.render(Blog.oneblog(id).get(0),blogForm,id,loginForm,curUser()));
+    }
+    public static Result submitEditSingle(Long id) {
+    	Form<Blog> filledForm = blogForm.bindFromRequest();
+  	  if(filledForm.hasErrors()||curUser()==null) {
+  	    return  badRequest(
+  	      views.html.index.render(Blog.all(),blogForm, loginForm, curUser())
+  	    );
+  	  } else {
+  		 Blog c= filledForm.get();
+  		 c.update(id);
+  		 
+  	    return redirect(routes.Application.index());
+    }
+    }
+    
     
     /*
      * User sign up
