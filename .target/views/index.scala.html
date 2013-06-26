@@ -47,7 +47,7 @@
 					 </div>
 	
 					 <div class="post-content">
-					    	@blog.content
+					    	@Html(blog.content)
 					 </div>
 					 <hr>
 					 <h3> <a href="@routes.Application.single(blog.id)">Comments(@blog.comments.size()) </a></h3>
@@ -58,38 +58,31 @@
 			</div>
     	
     }
-    <h2>Insert new blog to post</h2>
-    @if(curUser!=null){
-    	@form(routes.Application.post()) {
-    			@inputText(blogForm("title"),args ='cols -> 80) 
-    			@textarea(blogForm("content"),args = 'rows -> 10, 'cols -> 80)
-		        <input type="submit">
-	    	}
-	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.js")">
+    	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.js")">
 	    	
 	    	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.js")"></script>
 	    	
 	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.wymeditor.min.js")">
 
 	    	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.wymeditor.min.js")"></script>
+    
+    <h2>Insert new blog to post</h2>
+    @if(curUser!=null){
+    	@form(routes.Application.post()) {
+    			@inputText(blogForm("title"),args ='cols -> 80) 
+    			@textarea(blogForm("content"),args = 'rows -> 10, 'cols -> 80, 'class -> "my-class")
+		        <input type="submit">
+	    	}
 
 <script type="text/javascript">
 
 jQuery(function() {
-    jQuery('#content').wymeditor({
+    jQuery('.my-class').wymeditor({
     
         html: '<p>Hello, World!<\/p>',
         stylesheet: 'styles.css',
         skin: 'twopanels',
-        postInit: function(wym) {
-
-            jQuery(wym._box).find(wym._options.containersSelector)
-				.removeClass('wym_dropdown')
-				.addClass('wym_panel')
-				.find('h2 > span')
-				.remove();jQuery(wym._box).find(wym._options.iframeSelector)
-				.css('height','250px');
-        }
+        
     });
 });
 
