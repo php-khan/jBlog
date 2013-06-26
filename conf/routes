@@ -9,6 +9,9 @@ GET      /logout                         controllers.Application.logout()
 
 # Home page
 GET     /                               controllers.Application.index()
+
+GET     /admin                          controllers.Application.admin()
+
 GET     /blog/:id                       controllers.Application.single(id : Long)
 POST     /post                          controllers.Application.post()
 POST     /blog/:id                      controllers.Application.postComment(id : Long)

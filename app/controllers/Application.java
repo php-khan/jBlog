@@ -25,6 +25,7 @@ public class Application extends Controller {
 	 * check cookies and returns current user
 	 */
 	public static User curUser(){
+		try{
 		String cookie =request().cookies().get("cookie").value();
 		if(curUser!=null){
 			if (!cookie.equals(""+curUser.id)){
@@ -32,6 +33,7 @@ public class Application extends Controller {
 			}
 		}
 		return curUser;
+		}catch(Exception e){return null;}
 	}
 	
 	
@@ -40,8 +42,13 @@ public class Application extends Controller {
 	 */
 	
     public static Result index() {
-        return ok(views.html.index.render(Blog.all(),blogForm,loginForm,curUser()));
+        return ok(views.html.index.render(Blog.published(),blogForm,loginForm,curUser()));
     }
+    
+    public static Result admin() {
+        return ok(views.html.index.render(Blog.unpublished(),blogForm,loginForm,curUser()));
+    }
+    
     /*
      * Landing page post a new blog
      */

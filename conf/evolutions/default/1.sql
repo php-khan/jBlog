@@ -7,6 +7,7 @@ create table blog (
   id                        bigint not null,
   title                     varchar(255),
   create_time               timestamp,
+  publish                   boolean,
   content                   TEXT,
   author_id                 bigint,
   constraint pk_blog primary key (id))

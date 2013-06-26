@@ -71,6 +71,7 @@
     	@form(routes.Application.post()) {
     			@inputText(blogForm("title"),args ='cols -> 80) 
     			@textarea(blogForm("content"),args = 'rows -> 10, 'cols -> 80, 'class -> "my-class")
+		        @checkbox(blogForm("publish"))
 		        <input type="submit">
 	    	}
 
