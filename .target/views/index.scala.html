@@ -63,11 +63,43 @@
     	@form(routes.Application.post()) {
     			@inputText(blogForm("title"),args ='cols -> 80) 
     			@textarea(blogForm("content"),args = 'rows -> 10, 'cols -> 80)
-				
 		        <input type="submit">
 	    	}
+	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.js")">
+	    	
+	    	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.js")"></script>
+	    	
+	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.wymeditor.min.js")">
+
+	    	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.wymeditor.min.js")"></script>
+
+<script type="text/javascript">
+
+jQuery(function() {
+    jQuery('#content').wymeditor({
+    
+        html: '<p>Hello, World!<\/p>',
+        stylesheet: 'styles.css',
+        skin: 'twopanels',
+        postInit: function(wym) {
+
+            jQuery(wym._box).find(wym._options.containersSelector)
+				.removeClass('wym_dropdown')
+				.addClass('wym_panel')
+				.find('h2 > span')
+				.remove();jQuery(wym._box).find(wym._options.iframeSelector)
+				.css('height','250px');
+        }
+    });
+});
+
+</script>
+
+</head>
+	    	
 	   }else{
 	   		<h3>Login to post new blog</h3>
 	   }
+	   	   
 	    	
 }
