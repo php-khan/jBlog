@@ -8,6 +8,8 @@ import scala.xml.Text;
 
 import javax.persistence.*;
 
+import com.avaje.ebean.Expr;
+
 import controllers.Application;
 
 @Entity
@@ -21,6 +23,9 @@ public class Blog extends Model{
   
   @Required
   public Date create_time;
+  
+  @Required
+  public boolean publish;
   
   @javax.persistence.Column(columnDefinition="TEXT")
   @Required
@@ -47,6 +52,14 @@ public class Blog extends Model{
   public static List<Blog> all() {
     return find.all();
   }
+  public static List<Blog> published() {
+	    return find.where(Expr.eq("publish",new Boolean(true))).findList();
+	  }
+  public static List<Blog> unpublished() {
+	    return find.where(Expr.eq("publish",new Boolean(false))).findList();
+	  }
+  
+  
   public static List<Blog> oneblog(Long id){
 	  List tempList=new <Blog> LinkedList();
 	  tempList.add(find.byId(id));
