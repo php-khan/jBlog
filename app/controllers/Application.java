@@ -22,7 +22,9 @@ public class Application extends Controller {
 	static Form<Blog> blogForm = Form.form(Blog.class);
 	
 	/*
-	 * check cookies and returns current user
+	 * Security function is done here.
+	 * 
+	 * When cookie does match it returns curUser as the instance of an User, or null otherwise
 	 */
 	public static User curUser(){
 		try{
@@ -38,15 +40,22 @@ public class Application extends Controller {
 	
 	
 	/*
-	 * Landing page, it shows all the blog post, with no comment
+	 * Route: /
+	 * Shorthadn: Landing page
+	 * Description: It shows all the Published blog posts and the number of blog posts.
+	 * 
+	 * Currently it has no forms.
 	 */
 	
     public static Result index() {
-        return ok(views.html.index.render(Blog.published(),blogForm,loginForm,curUser()));
+        return ok(views.html.index.render(Blog.published()));
     }
+    /*
+     * It is basic admin page, contains ever
+     */
     
     public static Result admin() {
-        return ok(views.html.admin.render(Blog.unpublished(),blogForm,loginForm,curUser(),Blog.published(), Blog.unpublished()));
+        return ok(views.html.admin.render(Blog.unpublished(),blogForm,loginForm,curUser(),Blog.published(), Blog.unpublished(),User.find.all()));
     }
     
     /*
@@ -56,7 +65,7 @@ public class Application extends Controller {
     	Form<Blog> filledForm = blogForm.bindFromRequest();
   	  if(filledForm.hasErrors()||curUser()==null) {
   	    return  badRequest(
-  	      views.html.index.render(Blog.all(),blogForm, loginForm, curUser())
+  	      views.html.index.render(Blog.all()) //,blogForm, loginForm, curUser())
   	    );
   	  } else {
   		 Blog c= filledForm.get();
@@ -86,8 +95,7 @@ public class Application extends Controller {
   		 Comment.create(c, id);
   		 
   	    return redirect(routes.Application.index());
-    }
-  
+    } 
 }
     static Form<User> signupForm = Form.form(User.class);
     
@@ -99,7 +107,7 @@ public class Application extends Controller {
     	Form<Blog> filledForm = blogForm.bindFromRequest();
   	  if(filledForm.hasErrors()||curUser()==null) {
   	    return  badRequest(
-  	      views.html.index.render(Blog.all(),blogForm, loginForm, curUser())
+  	    		views.html.singleedit.render(Blog.oneblog(id).get(0),blogForm,id,loginForm,curUser())
   	    );
   	  } else {
   		 Blog c= filledForm.get();

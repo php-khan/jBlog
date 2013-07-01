@@ -1,36 +1,21 @@
-@(blogs: List[Blog], blogForm: Form[Blog], loginForm:Form[User],curUser: User)
+@(blogs: List[Blog])
 @import helper._
-
-
-  		<div class="login-area">
-		@if(curUser==null){
-		
-		
-		      @form(routes.Application.login()) {
-					@inputText(loginForm("username")) 
-					@inputText(loginForm("password")) 
-		        	<input type="submit">
-	    		}
-					|
-		        <a class="login-link" href="@routes.Application.signupPage()">sign-up</a>
-	    	
-**/
-    	}else{
-    	  <a class="login-link" href="">@curUser.username</a>
-	      |
-	      <a class="login-link" href="@routes.Application.logout()">logout</a>
-    	}
- 		 </div>
-
-
-
-<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/blog.css")">
 
 @main("Welcome to Play 2.1") {
 	<a href="/blog" class="main-title">
     		My Blog
   	</a>
 
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/blog.css")">
+
+
+  	     <div class="login-area">
+    	  <a class="login-link" href="@routes.Application.signupPage()">signup</a>
+	      |
+	      <a class="login-link" href="@routes.Application.login()">login</a>
+ 		 </div>
+ 		 }
     @for(blog <- blogs){
     	<div id="content">
 		    
@@ -57,43 +42,6 @@
 	
 			</div>
     	
-    }
-    	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.js")">
-	    	
-	    	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.js")"></script>
-	    	
-	    	<link rel="stylesheet" media="screen" href="@routes.Assets.at("javascripts/jquery.wymeditor.min.js")">
-
-	    	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.wymeditor.min.js")"></script>
-    
-    <h2>Insert new blog to post</h2>
-    @if(curUser!=null){
-    	@form(routes.Application.post()) {
-    			@inputText(blogForm("title"),args ='cols -> 80) 
-    			@textarea(blogForm("content"),args = 'rows -> 10, 'cols -> 80, 'class -> "my-class")
-		        @checkbox(blogForm("publish"))
-		        <input type="submit">
-	    	}
-
-<script type="text/javascript">
-
-jQuery(function() {
-    jQuery('.my-class').wymeditor({
-    
-        html: '<p>Hello, World!<\/p>',
-        stylesheet: 'styles.css',
-        skin: 'twopanels',
-        
-    });
-});
-
-</script>
-
-</head>
-	    	
-	   }else{
-	   		<h3>Login to post new blog</h3>
-	   }
 	   	   
 	    	
 }
