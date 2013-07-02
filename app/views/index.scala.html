@@ -1,4 +1,4 @@
-@(blogs: List[Blog])
+@(blogs: List[Blog],pages: Long)
 @import helper._
 
 @main("Welcome to Play 2.1") {
@@ -40,8 +40,11 @@
 					 
 					</div>
 	
-			</div>
-    	
-	   	   
-	    	
+			</div>	    	
 }
+
+<div style="float:right">
+    @for( a <- 1 to pages.toInt){
+         <a href="/page/@a">@a</a> | 
+      }
+</div>

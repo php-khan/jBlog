@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import models.Blog;
 import models.Comment;
 import models.User;
@@ -28,7 +30,7 @@ public class Application extends Controller {
 	 */
 	public static User curUser(){
 		try{
-		String cookie =request().cookies().get("cookie").value();
+		String cookie =session("connected");//request().cookies().get("cookie").value();
 		if(curUser!=null){
 			if (!cookie.equals(""+curUser.id)){
 				curUser=null;
@@ -42,14 +44,35 @@ public class Application extends Controller {
 	/*
 	 * Route: /
 	 * Shorthadn: Landing page
-	 * Description: It shows all the Published blog posts and the number of blog posts.
+	 * Description: It shows first 5 Published blog posts.
 	 * 
 	 * Currently it has no forms.
 	 */
 	
+	
+	
     public static Result index() {
-        return ok(views.html.index.render(Blog.published()));
+    	return page(new Long(1) );
     }
+	/*
+	 * Route: /pages/(int)
+	 * Shorthads: Landing page
+	 * 
+	 * Description: 
+	 */
+	
+    public static Result page(Long i) {
+    	i=i-1;
+    	List pBlogs= Blog.published();
+        return ok(
+        		views.html.index.render(
+        				pBlogs.subList((int) (i*5),pBlogs.size()>(i+1)*5?(int)(i+1)*5:(int)pBlogs.size())
+        				,new Long((int)Math.ceil(pBlogs.size()/5.0)))
+        );
+    }
+    
+    
+    
     /*
      * It is basic admin page, contains ever
      */
@@ -65,7 +88,8 @@ public class Application extends Controller {
     	Form<Blog> filledForm = blogForm.bindFromRequest();
   	  if(filledForm.hasErrors()||curUser()==null) {
   	    return  badRequest(
-  	      views.html.index.render(Blog.all()) //,blogForm, loginForm, curUser())
+  	    		
+  	      //views.html.index.render(Blog.all()) //,blogForm, loginForm, curUser())
   	    );
   	  } else {
   		 Blog c= filledForm.get();
@@ -154,6 +178,8 @@ public class Application extends Controller {
     		 curUser=User.verify(c.username, c.password);
     		 if (curUser!=null){
     			 response().setCookie("cookie" ,""+curUser.id);
+    			 session("connected", ""+curUser.id);
+    			 
     			 return redirect(routes.Application.index());
     		 }
     		 return ok("bad man nanana");
@@ -162,6 +188,7 @@ public class Application extends Controller {
     }
     public static Result logout() {
     	response().setCookie("cookie" ,"");
+    	session().remove("connected");
     	return redirect(routes.Application.index());
     }
     
