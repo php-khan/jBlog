@@ -3,18 +3,28 @@
 # ~~~~
 
 GET      /signup                         controllers.Application.signupPage()                                                
-POST      /signup                         controllers.Application.signup()
+POST      /signup                        controllers.Application.signup()
 POST      /login                         controllers.Application.login()
 GET      /logout                         controllers.Application.logout()
 
 # Home page
 GET     /                               controllers.Application.index()
+GET     /page/:id                      controllers.Application.page(id: Long)
 
+#Page Items
+GET     /blog/:id                       controllers.Application.single(id : Long)
+POST     /post                          controllers.Application.post()
+
+#comment
+POST     /blog/:id                      controllers.Application.postComment(id : Long)
+
+
+#Admin pages, where pages can be edited
 GET     /admin                          controllers.Application.admin()
 GET     /admin/blog/:id                 controllers.Application.editSingle(id : Long)
 POST     /admin/blog/:id                 controllers.Application.submitEditSingle(id : Long)
-GET     /blog/:id                       controllers.Application.single(id : Long)
-POST     /post                          controllers.Application.post()
-POST     /blog/:id                      controllers.Application.postComment(id : Long)
+
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
