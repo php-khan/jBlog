@@ -2,10 +2,11 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET      /signup                         controllers.Application.signupPage()                                                
-POST      /signup                        controllers.Application.signup()
-POST      /login                         controllers.Application.login()
-GET      /logout                         controllers.Application.logout()
+GET      /signup                         controllers.Auth.signup()
+POST     /signup                         controllers.Auth.signupFormProcess()
+POST     /login                          controllers.Auth.loginFormProcess()
+GET      /login                         controllers.Auth.login()
+GET      /logout                         controllers.Auth.logout()
 
 # Home page
 GET     /                               controllers.Application.index()

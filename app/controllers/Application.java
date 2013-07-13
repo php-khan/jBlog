@@ -141,56 +141,7 @@ public class Application extends Controller {
     }
     }
     
-    
-    /*
-     * User sign up
-     */
-    public static Result signupPage(){
-    	return ok(views.html.signup.render(signupForm,loginForm));
-    }
-    /*
-     * Makes new user
-     */
-    public static Result signup() {
-    	Form<User> filledForm = signupForm.bindFromRequest();
-  	  if(filledForm.hasErrors()) {
-  	    return badRequest(
-  	    		"very bad"
-  	      //views.html.index.render(Blog.find(id),commentForm)
-  	    );
-  	  } else {
-  		 User c= filledForm.get();
-  		 User.create(c);
-  	    return redirect(routes.Application.index());
-    }
-}
-    /*
-     * Login user, changes cookies
-     */
-    public static Result login() {
-    	Form<User> filledForm = loginForm.bindFromRequest();
-    	  if(filledForm.hasErrors()) {
-    	    return badRequest(
-    	      //views.html.index.render(Blog.find(id),commentForm)
-    	    );
-    	  } else {
-    		 User c= filledForm.get();
-    		 curUser=User.verify(c.username, c.password);
-    		 if (curUser!=null){
-    			 response().setCookie("cookie" ,""+curUser.id);
-    			 session("connected", ""+curUser.id);
-    			 
-    			 return redirect(routes.Application.index());
-    		 }
-    		 return ok("bad man nanana");
-    			 //redirect(routes.Application.index());
-      }
-    }
-    public static Result logout() {
-    	response().setCookie("cookie" ,"");
-    	session().remove("connected");
-    	return redirect(routes.Application.index());
-    }
+
     
     
     

@@ -1,16 +1,9 @@
-@(signupForm: Form[User], loginForm: Form[User])
+@(signupForm: Form[User])
 @import helper._
 
 				Signup
-				@form(routes.Application.signup()) {
+				@form(routes.Auth.signup()) {
 					@inputText(signupForm("username")) 
 					@inputText(signupForm("password")) 
-		        	<input type="submit">
-	    		}
-	    		
-	    		Login
-	    		@form(routes.Application.login()) {
-					@inputText(loginForm("username")) 
-					@inputText(loginForm("password")) 
 		        	<input type="submit">
 	    		}

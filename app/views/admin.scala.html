@@ -6,19 +6,19 @@
 		@if(curUser==null){
 
 
-		      @form(routes.Application.login()) {
+		      @form(routes.Auth.login()) {
 					@inputText(loginForm("username"))
 					@inputText(loginForm("password")) 
 		        	<input type="submit">
 	    		}
 					|
-		        <a class="login-link" href="@routes.Application.signupPage()">sign-up</a>
+		        <a class="login-link" href="@routes.Auth.signupPage()">sign-up</a>
 
 **/
     	}else{
     	  <a class="login-link" href="">@curUser.username</a>
 	      |
-	      <a class="login-link" href="@routes.Application.logout()">logout</a>
+	      <a class="login-link" href="@routes.Auth.logout()">logout</a>
     	}
  		 </div>
 
