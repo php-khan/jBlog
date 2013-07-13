@@ -2,7 +2,7 @@
 @import helper._
 
 				Signup
-				@form(routes.Auth.signup()) {
+				@form(routes.Auth.signupFormProcess()) {
 					@inputText(signupForm("username")) 
 					@inputText(signupForm("password")) 
 		        	<input type="submit">

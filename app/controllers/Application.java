@@ -28,16 +28,14 @@ public class Application extends Controller {
 	 * 
 	 * When cookie does match it returns curUser as the instance of an User, or null otherwise
 	 */
-	public static User curUser(){
-		try{
-		String cookie =session("connected");//request().cookies().get("cookie").value();
-		if(curUser!=null){
-			if (!cookie.equals(""+curUser.id)){
-				curUser=null;
-			}
-		}
-		return curUser;
-		}catch(Exception e){return null;}
+	public static User curUser() {
+		String isLogin = session("connected");
+        if (isLogin != null) {
+            //System.out.println(isLogin);
+            curUser =  User.findById(new Long(Integer.parseInt(isLogin)));
+        }
+
+        return curUser;
 	}
 	
 	

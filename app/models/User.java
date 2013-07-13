@@ -13,9 +13,8 @@ import controllers.Application;
 
 
 @Entity
-public class User extends Model{
-	
-	@Id
+public class User extends Model {
+    @Id
 	public Long id;
 	
 	@Column(unique=true)
@@ -46,17 +45,18 @@ public class User extends Model{
 	            .eq("password", password).findUnique();	
 	}
 	  
-	  public static Finder<Long,User> find = new Finder(
-			    Long.class, User.class
-			  );
-	  
-	  public static void create(User newuser) {
+    public static Finder<Long,User> find = new Finder(Long.class, User.class);
 
-		  newuser.save();
-	  }
-	  
-	  public static void delete(Long id) {
-		  find.ref(id).delete();
-	  }
-	
+    public static void create(User newuser) {
+
+      newuser.save();
+    }
+
+   public static void delete(Long id) {
+      find.ref(id).delete();
+   }
+
+    public static User findById(Long id) {
+        return find.byId(id);
+    }
 }
